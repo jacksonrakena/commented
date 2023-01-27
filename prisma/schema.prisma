@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TrackCommentary {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  authorId   String
+  trackId    String
+  playlistId String
+
+  label String
+  text  String
+
+  @@index(playlistId)
+}
+
+model AlbumCollection {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  authorId    String
+  name        String
+  description String
+
+  entries AlbumCollectionEntry[] @relation()
+
+  @@index(authorId)
+}
+
+model AlbumCollectionEntry {
+  id                String            @id @default(uuid())
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  spotifyAlbumId    String
+  albumCollection   AlbumCollection   @relation(fields: [albumCollectionId], references: [id])
+  albumCollectionId String
+  order             Int
+  commentaries      AlbumCommentary[]
+
+  @@index(albumCollectionId)
+}
+
+model AlbumCommentary {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  albumCollectionEntry   AlbumCollectionEntry @relation(fields: [albumCollectionEntryId], references: [id])
+  albumCollectionEntryId String
+
+  label String
+  text  String
+
+  @@index(albumCollectionEntryId)
+}
