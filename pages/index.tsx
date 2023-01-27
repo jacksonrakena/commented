@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ export default function Home() {
   const auth = useSession();
   console.log(auth);
   const [me, setMe] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
   useEffect(() => {
     if (auth.status === "authenticated") {
       fetch(`https://api.spotify.com/v1/users/${auth.data.id}/playlists`, {
@@ -19,6 +20,16 @@ export default function Home() {
           console.log("me", json);
           setMe(json);
         });
+      fetch(`https://api.spotify.com/v1/users/${auth.data.id}`, {
+        headers: {
+          Authorization: "Bearer " + auth.data.token,
+        },
+      })
+        .then((d) => d.json())
+        .then((json) => {
+          console.log("profile", json);
+          setProfile(json);
+        });
     }
     if (auth.status === "unauthenticated") {
       signIn("spotify");
@@ -26,6 +37,7 @@ export default function Home() {
   }, [auth.status]);
   return (
     <Box padding={"20px"}>
+      <Heading>{profile?.display_name}</Heading>
       {me?.items?.map((playlist) => {
         return (
           <div>
