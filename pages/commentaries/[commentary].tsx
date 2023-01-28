@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps<{
     }[];
   };
 }> = async (context) => {
-  var tracks = await prisma.commentary.findMany({
+  var tracks = await prisma.trackCommentary.findMany({
     where: {
       playlistId: context.params?.commentary?.toString(),
     },
