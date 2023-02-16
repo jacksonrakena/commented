@@ -7,16 +7,16 @@ export default async function handler(
   res: NextApiResponse
 ) {
   var requestbody = JSON.parse(req.body);
-  var commentaries: string[] = requestbody.commentaries;
+  var commentaries: string[] = requestbody;
   var response: { [x: string]: any } = {};
   for (let id of commentaries.slice(0, 10)) {
     console.log(id);
-    var commentariesForThisTrack = await prisma.trackCommentary.findMany({
+    var dbCollections = await prisma.objectCollection.findFirst({
       where: {
-        playlistId: id,
+        objectSourceId: id,
       },
     });
-    response[id] = commentariesForThisTrack;
+    if (dbCollections) response[dbCollections.id] = dbCollections;
   }
   console.log(requestbody.commentaries);
 

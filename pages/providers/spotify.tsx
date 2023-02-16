@@ -1,4 +1,11 @@
-import { Box, Heading, ListItem, UnorderedList } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Heading,
+  ListItem,
+  Spinner,
+  UnorderedList,
+} from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -10,6 +17,7 @@ export const SpotifyPlaylistProvider = () => {
   if (!spotifyAccount) return <></>;
 
   const [playlists, setPlaylists] = useState<any>();
+  const [collections, setCollections] = useState<any>();
 
   useEffect(() => {
     fetch(
@@ -24,17 +32,35 @@ export const SpotifyPlaylistProvider = () => {
       .then((json) => {
         console.log("me", json);
         setPlaylists(json.items);
+
+        fetch("/api/collections/spotify", {
+          method: "POST",
+          body: JSON.stringify({ ids: json.items.map((e) => e.id) }),
+        })
+          .then((d) => d.json())
+          .then((collection) => {
+            setCollections(collection);
+          });
       });
   }, [spotifyAccount.providerAccountId]);
 
   return (
-    <Box>
-      <Heading size="sm">Your Spotify playlists</Heading>
-      <UnorderedList>
-        {playlists.slice(0, 3).map((playlist: any) => (
-          <ListItem>{playlist.name}</ListItem>
-        ))}
-      </UnorderedList>
+    <Box border={"2px solid #1DB954"} borderRadius={10} padding={"15px"}>
+      <Heading size="sm" color={"#1DB954"}>
+        Your Spotify playlists
+      </Heading>
+      {playlists && (
+        <UnorderedList>
+          {playlists.map((playlist: any) => (
+            <ListItem>{playlist.name}</ListItem>
+          ))}
+        </UnorderedList>
+      )}
+      {!playlists && (
+        <Center>
+          <Spinner />
+        </Center>
+      )}
     </Box>
   );
 };
