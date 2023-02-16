@@ -1129,10 +1129,20 @@
   "resolved" "https://registry.npmjs.org/@fontsource/ibm-plex-sans/-/ibm-plex-sans-4.5.13.tgz"
   "version" "4.5.13"
 
+"@fontsource/montserrat@^4.5.14":
+  "integrity" "sha512-fTvrteVzuFUePhr4QYBGoK8G/YHLJ3IhF1HhKg0AxcFvZajJT7rM7ULdmKLSd2PkX44R3aaFZq1zDbmjbGGI+w=="
+  "resolved" "https://registry.npmjs.org/@fontsource/montserrat/-/montserrat-4.5.14.tgz"
+  "version" "4.5.14"
+
 "@fontsource/open-sans@^4.5.14":
   "integrity" "sha512-mBXIIETBlW8q/ocuUN0hyGow2iuf75hQEHQt8R/RJ/HcphVbLg8KB7pHYGbFGDqs75W+SWvTC7JkVeAjT65BuQ=="
   "resolved" "https://registry.npmjs.org/@fontsource/open-sans/-/open-sans-4.5.14.tgz"
   "version" "4.5.14"
+
+"@fontsource/raleway@^4.5.12":
+  "integrity" "sha512-uKs13d6NFWU4vf5LSDHK/cbaAw+UXkzz03fKjyvkKq8Nop+CeB6o8STEDkZD9/uOo3v3sgm59Wyw8uGWvxoCiA=="
+  "resolved" "https://registry.npmjs.org/@fontsource/raleway/-/raleway-4.5.12.tgz"
+  "version" "4.5.12"
 
 "@jridgewell/gen-mapping@^0.1.0":
   "integrity" "sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w=="

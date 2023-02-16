@@ -1,4 +1,24 @@
-import { HStack, Img, Text, VStack } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  HStack,
+  Img,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  Textarea,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import { AlbumCollectionFrontend } from "./AlbumCollection";
 
 export const AlbumWithCommentary = (props: {
@@ -9,8 +29,34 @@ export const AlbumWithCommentary = (props: {
     text: string;
   }[];
 }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add commentary to {props.album.name}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl mb={4}>
+              <FormLabel>Commentary name</FormLabel>
+              <Input type="text"></Input>
+              <FormHelperText>The name of this commentary.</FormHelperText>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Commentary text</FormLabel>
+              <Textarea placeholder="I like this album." />
+              <FormHelperText>
+                A descriptive commentary on this album.
+              </FormHelperText>
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue">Add</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <tr>
         <td
           style={{
@@ -36,7 +82,12 @@ export const AlbumWithCommentary = (props: {
               <Img maxW={"65px"} src={props.album.image} />
             </div>
             <VStack alignItems="start" spacing={1}>
-              <Text fontWeight={"bold"}>{props.album.name}</Text>
+              <HStack>
+                <Text fontWeight={"bold"} fontStyle={"italic"}>
+                  {props.album.name}
+                </Text>{" "}
+                <Text>({props.album.raw.release_date.substring(0, 4)})</Text>
+              </HStack>
               <Text>{props.album.artist}</Text>
             </VStack>
           </HStack>
@@ -70,6 +121,19 @@ export const AlbumWithCommentary = (props: {
                 <Text>{commentary.text}</Text>
               </VStack>
             ))}
+            <Button
+              variant="outline"
+              colorScheme={"teal"}
+              size="sm"
+              marginY="10px"
+              leftIcon={<AddIcon />}
+              onClick={() => {
+                onOpen();
+              }}
+            >
+              {" "}
+              Add commentary
+            </Button>
           </td>
         </tr>
       )}

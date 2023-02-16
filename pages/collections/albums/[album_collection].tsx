@@ -48,6 +48,7 @@ export default function AlbumCollectionPage(
           number: props.album.entries
             .filter((e) => e.albumId === downloadedAlbum.id)[0]
             .order.toString(),
+          raw: downloadedAlbum,
         };
       })}
       author={{ name: props.album.author.substring(0, 5), image: "" }}
