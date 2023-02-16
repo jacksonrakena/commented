@@ -17,6 +17,7 @@
     "@fontsource/montserrat": "^4.5.14",
     "@fontsource/open-sans": "^4.5.14",
     "@fontsource/raleway": "^4.5.12",
+    "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^4.9.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",

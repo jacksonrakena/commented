@@ -1,19 +1,25 @@
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { Account, PrismaClient } from "@prisma/client";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
+
+declare module "next-auth" {
+  export interface Session {
+    accounts: Account[];
+  }
+}
+
+const prisma = new PrismaClient();
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
+  adapter: PrismaAdapter(prisma),
   providers: [
     SpotifyProvider({
       clientId: process.env.SPOTIFY_CLIENT_ID ?? "",
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET ?? "",
     }),
-    // ...add more providers here
   ],
   callbacks: {
-    signIn: async (params) => {
-      console.log("signIn-params", params);
-      return true;
-    },
     jwt: async (params) => {
       console.log("jwt-params", params);
       if (params.account) {
@@ -23,10 +29,12 @@ export const authOptions: NextAuthOptions = {
       return params.token;
     },
     session: async (params) => {
-      console.log("session-params", params);
-      //params.session.user = params.user;
-      params.session.id = params.token.id;
-      params.session.token = params.token.accessToken;
+      const accounts = await prisma.account.findMany({
+        where: {
+          userId: params.user.id,
+        },
+      });
+      params.session.accounts = accounts;
       return params.session;
     },
   },

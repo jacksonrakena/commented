@@ -10,54 +10,117 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TrackCommentary {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  authorId   String
-  trackId    String
-  playlistId String
-
-  label String
-  text  String
-
-  @@index(playlistId)
+enum ObjectType {
+  Playlist
+  Track
+  Album
+  Artist
+  Genre
+  Year
 }
 
-model AlbumCollection {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  authorId    String
+enum ObjectSource {
+  Spotify
+  AppleMusic
+  Discogs
+  YouTubeMusic
+  YouTube
+  Original
+}
+
+model ObjectCommentary {
+  id         String   @id @default(uuid()) @db.Uuid
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+
+  label  String?
+  text   String?
+  rating Int?
+
+  objectRecord   ObjectRecord @relation(fields: [objectRecordId], references: [id])
+  objectRecordId String       @db.Uuid
+}
+
+model ObjectRecord {
+  id         String   @id @default(uuid()) @db.Uuid
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+
+  authorId String
+
+  objectType     ObjectType
+  objectSource   ObjectSource
+  objectSourceId String
+
+  collection   ObjectCollection @relation(fields: [collectionId], references: [id])
+  collectionId String           @db.Uuid
+
+  commentaries ObjectCommentary[]
+}
+
+model ObjectCollection {
+  id         String   @id @default(uuid()) @db.Uuid
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+
   name        String
   description String
 
-  entries AlbumCollectionEntry[] @relation()
+  authorId String
 
-  @@index(authorId)
+  objectType ObjectType
+
+  objectSource   ObjectSource
+  objectSourceId String?
+
+  members ObjectRecord[] @relation()
+
+  @@index(objectSourceId)
 }
 
-model AlbumCollectionEntry {
-  id                String            @id @default(uuid())
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  spotifyAlbumId    String
-  albumCollection   AlbumCollection   @relation(fields: [albumCollectionId], references: [id])
-  albumCollectionId String
-  order             Int
-  commentaries      AlbumCommentary[]
+// identity
 
-  @@index(albumCollectionId)
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
-model AlbumCommentary {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
-  albumCollectionEntry   AlbumCollectionEntry @relation(fields: [albumCollectionEntryId], references: [id])
-  albumCollectionEntryId String
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+}
 
-  label String
-  text  String
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-  @@index(albumCollectionEntryId)
+  @@unique([identifier, token])
 }
