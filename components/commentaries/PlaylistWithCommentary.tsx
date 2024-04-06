@@ -110,7 +110,11 @@ export const PlaylistWithCommentary = (props: {
         <Heading margin="15px" size="lg">
           {props.author.name}'s commentary
         </Heading>
-        <Box overflowY={{ lg: "scroll" }} maxH={{ lg: "900px" }}>
+        <Box
+          overflowY={{ lg: "scroll" }}
+          maxH={{ lg: "900px" }}
+          fontSize={"sm"}
+        >
           <table style={{ tableLayout: "fixed" }}>
             <tbody>
               {props.tracks?.map((track) => (

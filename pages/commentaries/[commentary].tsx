@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -14,11 +13,12 @@ export default function Commentary({
   const commentaryId = commentary?.toString();
   const [downloadedPlaylist, setPlaylist] = useState<any>(null);
 
+  console.log(auth);
   useEffect(() => {
     if (auth.status === "authenticated") {
       fetch(`https://api.spotify.com/v1/playlists/${commentaryId}`, {
         headers: {
-          Authorization: "Bearer " + auth.data.token,
+          Authorization: "Bearer " + auth.data.accounts[0].access_token,
         },
       })
         .then((d) => d.json())
@@ -56,7 +56,7 @@ export default function Commentary({
   );
 }
 
-const prisma = new PrismaClient();
+//const prisma = new PrismaClient();
 
 export const getServerSideProps: GetServerSideProps<{
   playlist: {
@@ -66,85 +66,100 @@ export const getServerSideProps: GetServerSideProps<{
     }[];
   };
 }> = async (context) => {
-  var tracks = await prisma.trackCommentary.findMany({
-    where: {
-      playlistId: context.params?.commentary?.toString(),
-    },
-  });
+  // var tracks = await prisma.objectCommentary.findMany({
+  //   where: {
+  //     objectRecord: {
+  //       collectionId: context.params?.id,
+  //     },
+  //   },
+  // });
   return {
     props: {
       playlist: {
-        tracks: tracks.map((t) => {
-          return {
-            id: t.trackId,
+        // tracks: tracks.map((t) => {
+        //   return {
+        //     id: t.objectRecordId,
+        //     commentaries: [
+        //       {
+        //         name: t.label,
+        //         text: t.text,
+        //       },
+        //     ],
+        //   };
+        // }),
+        tracks: [
+          {
+            id: "7FjZU7XFs7P9jHI9Z0yRhK",
             commentaries: [
               {
-                name: t.label,
-                text: t.text,
+                name: "Jackson's take",
+                text: "A upbeat and driving dance-pop jam that explores the struggle of commitment from both sides of the coin. Number one on the U.S. Billboard Dance Club.",
               },
             ],
-          };
-        }),
-        // tracks: [
-        //   {
-        //     id: "1toNKayLMeCcVlsLGXJl7n",
-        //     commentaries: [
-        //       {
-        //         name: "MisaN says",
-        //         text: "This song is my favourite song. I am the world's biggest 100 Gecs fan.",
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     id: "1AbLS4CyyaCmrYCeYM5mTQ",
-        //     commentaries: [
-        //       {
-        //         name: "Jackson says",
-        //         text: "har har, har har, har har, har har",
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     id: "0dqJjKKxuKD5Dt3QH2n4CG",
-        //     commentaries: [
-        //       {
-        //         name: "Favourite line",
-        //         text: '"well, I look up to you, because you look after me" - I died',
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     id: "2PfnAaQIMwHPvmda8MG5jm",
-        //     commentaries: [
-        //       {
-        //         name: "Favourite line",
-        //         text: '"And it holds me, and it [never] lets me go"',
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     id: "4Z9zfa5ydgKrgWoRDDQ9AI",
-        //     commentaries: [
-        //       {
-        //         name: "Jackson says",
-        //         text: "This song is a auditory masterpiece. This very song embodies the best of The 1975 and rock music today. The lyrics are masterfully written and the backing track amplifies the message. I love this song so much.",
-        //       },
-        //       {
-        //         name: "Favourite line",
-        //         text: "This is a test. This is only a test. If this were an actual emergency, you would have been instructed to evacuate the building. Please remain calm. This is a test. This is only a test. If this were an actual emergency, you would have been instructed to evacuate the building. Please remain calm. This is a test. This is only a test. If this were an actual emergency, you would have been instructed to evacuate the building. Please remain calm.",
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     id: "0jAmfPp5OsWLwJXlRM4L9o",
-        //     commentaries: [
-        //       {
-        //         name: "Jackson says",
-        //         text: "The guitar solo at 1:50 gets me every time. Perfection",
-        //       },
-        //     ],
-        //   },
-        // ],
+          },
+          {
+            id: "7D49Iig0avHre9RFSUMkd2",
+            commentaries: [
+              {
+                name: "Quote from songwriter",
+                text: 'Tedder: "You know, it’s like a wish for somebody. Like, I wish this for you, I wish that for you."',
+              },
+              {
+                name: "Reflection",
+                text: "This song, for me, feels like a reminder to be grateful for the experiences you have lived in your life, and to be prepared that the best is yet to come. A reminder that even the worst moments in life have meaning.",
+              },
+            ],
+          },
+          {
+            id: "1AbLS4CyyaCmrYCeYM5mTQ",
+            commentaries: [
+              {
+                name: "Favourite line",
+                text: "",
+              },
+            ],
+          },
+          {
+            id: "0dqJjKKxuKD5Dt3QH2n4CG",
+            commentaries: [
+              {
+                name: "Favourite line",
+                text: '"I\'d spend my whole life // tied in ways to have you"',
+              },
+            ],
+          },
+          {
+            id: "2PfnAaQIMwHPvmda8MG5jm",
+            commentaries: [
+              {
+                name: "Favourite line",
+                text: '"I know // That time won\'t let me // Show what I want to show"',
+              },
+            ],
+          },
+          {
+            id: "4Z9zfa5ydgKrgWoRDDQ9AI",
+            commentaries: [
+              {
+                name: "Jackson says",
+                text: "This song is a auditory masterpiece. This very song embodies the best of The 1975 and rock music today. The lyrics are masterfully written and the backing track amplifies the message. I love this song so much.",
+              },
+              {
+                name: "Favourite line",
+                text: "This is a test. This is only a test. If this were an actual emergency, you would have been instructed to evacuate the building. Please remain calm. This is a test. This is only a test. If this were an actual emergency, you would have been instructed to evacuate the building. Please remain calm. This is a test. This is only a test. If this were an actual emergency, you would have been instructed to evacuate the building. Please remain calm.",
+              },
+            ],
+          },
+          {
+            id: "0jAmfPp5OsWLwJXlRM4L9o",
+            commentaries: [
+              {
+                name: "Jackson says",
+                text: "The guitar solo at 1:50 gets me every time. Perfection",
+              },
+            ],
+          },
+        ],
       },
     },
   };

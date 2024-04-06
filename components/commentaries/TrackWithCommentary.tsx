@@ -38,13 +38,23 @@ export const TrackWithCommentary = (props: {
           <HStack alignItems={"center"} spacing={4}>
             <div>
               <Img
-                maxW={"75px"}
+                maxW={"50px"}
                 src={(props.track.album?.images ?? [])[0]?.url}
               />
             </div>
             <VStack alignItems="start" spacing={1}>
-              <Text fontWeight={"bold"}>{props.track.name}</Text>
-              <Text>{props.track.artists[0].name}</Text>
+              <Text fontWeight={"bold"}>
+                {props.track.name}
+                <Text as="span" fontWeight={"normal"} fontStyle={"italic"}>
+                  {" "}
+                  (
+                  {props.track.name == props.track.album.name
+                    ? "Single"
+                    : props.track.album.name}
+                  , {props.track.album.release_date.slice(0, 4)})
+                </Text>
+              </Text>{" "}
+              <Text>{props.track.artists.map((e) => e.name).join(", ")}</Text>
             </VStack>
           </HStack>
         </td>
@@ -58,11 +68,11 @@ export const TrackWithCommentary = (props: {
               maxWidth: "750px",
             }}
           >
-            {props.commentaries.map((commentary) => (
+            {props.commentaries.map((commentary, i) => (
               <VStack
                 key={commentary.name}
-                paddingTop="15px"
-                paddingBottom={"15px"}
+                paddingTop="10px"
+                paddingBottom={i == props.commentaries.length - 1 ? "15px" : ""}
                 spacing={0}
                 alignItems={"start"}
               >
