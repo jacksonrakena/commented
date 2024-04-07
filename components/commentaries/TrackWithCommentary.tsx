@@ -39,6 +39,7 @@ export const TrackWithCommentary = (props: {
             <div>
               <Img
                 maxW={"50px"}
+                rounded={"md"}
                 src={(props.track.album?.images ?? [])[0]?.url}
               />
             </div>

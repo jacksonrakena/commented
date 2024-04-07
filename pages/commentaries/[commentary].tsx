@@ -98,11 +98,47 @@ export const getServerSideProps: GetServerSideProps<{
             ],
           },
           {
+            id: "1GjbTNFImFrjFsNdleDe78",
+            commentaries: [
+              {
+                name: "Critical Analysis",
+                text: "This power ballad has it all - an epic display of grandiosity, heart-twisting lyrics, and dramatic pauses to mark each phase. Possibly the sweetest song in the entire INXS line-up - this much-beloved hit was played at lead singer Michael Hutchence's funeral.",
+              },
+            ],
+          },
+          {
+            id: "7EsSVPxaYoAZjQwhspJBs2",
+            commentaries: [
+              {
+                name: "Critical Analysis",
+                text: '"Slave owners rapping 🔥🔥" - Rosh',
+              },
+            ],
+          },
+          {
+            id: "73W9I0EIOcw8IW8zEIiyN4",
+            commentaries: [
+              {
+                name: "Reflection",
+                text: "My favourite duo deconstructs house-club sound, mixing just enough experimentation while keeping it safe enough for the clubs. Long-time collaborator Ku showcases yet another great performance.",
+              },
+            ],
+          },
+          {
+            id: "4J7CKHCF3mdL4diUsmW8lq",
+            commentaries: [
+              {
+                name: "Reflection",
+                text: "House and electronic dance music continues its domination in my music taste with another early 2010s classic.",
+              },
+            ],
+          },
+          {
             id: "7D49Iig0avHre9RFSUMkd2",
             commentaries: [
               {
-                name: "Quote from songwriter",
-                text: 'Tedder: "You know, it’s like a wish for somebody. Like, I wish this for you, I wish that for you."',
+                name: "Favourite line",
+                text: '"Hope when you take that jump // You don\'t fear the fall"',
               },
               {
                 name: "Reflection",
@@ -132,8 +168,8 @@ export const getServerSideProps: GetServerSideProps<{
             id: "2PfnAaQIMwHPvmda8MG5jm",
             commentaries: [
               {
-                name: "Favourite line",
-                text: '"I know // That time won\'t let me // Show what I want to show"',
+                name: "Critical Analysis",
+                text: "Typically, Of Monsters and Men aren't exactly known for their lyricism. This song seemingly proves an exception - while the lyrics stay cryptic, coded, and vague enough for any interpretation, they still seem to deliver enough raw emotional power to merit a further reading. \"I know // That time won't let me // Show what I want to show\"",
               },
             ],
           },
@@ -147,6 +183,24 @@ export const getServerSideProps: GetServerSideProps<{
               {
                 name: "Favourite line",
                 text: "This is a test. This is only a test. If this were an actual emergency, you would have been instructed to evacuate the building. Please remain calm. This is a test. This is only a test. If this were an actual emergency, you would have been instructed to evacuate the building. Please remain calm. This is a test. This is only a test. If this were an actual emergency, you would have been instructed to evacuate the building. Please remain calm.",
+              },
+            ],
+          },
+          {
+            id: "19kHhX6f6EfLU7rcO3RqjO",
+            commentaries: [
+              {
+                name: "Reflection",
+                text: "I get sick of this song easily, but nobody can deny the craftsmanship that created this experimental breakdown of modern electronica.",
+              },
+            ],
+          },
+          {
+            id: "46lFttIf5hnUZMGvjK0Wxo",
+            commentaries: [
+              {
+                name: "Jackson says",
+                text: "This is one of the oldest songs I can remember listening to. My gateway drug to electronic music - this song remains an absolute thumper of power and energy.",
               },
             ],
           },

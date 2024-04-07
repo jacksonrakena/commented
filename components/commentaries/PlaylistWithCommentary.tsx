@@ -42,10 +42,10 @@ export const PlaylistWithCommentary = (props: {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            maxWidth: "400px",
+            maxWidth: "300px",
           }}
         >
-          <div>
+          <Box fontSize={"md"}>
             <VStack alignItems={"start"} spacing={"4"}>
               <Img src={props.image} style={{ borderRadius: "25px" }} />
               <VStack alignItems={"start"} spacing={"0"}>
@@ -97,7 +97,7 @@ export const PlaylistWithCommentary = (props: {
                 View {props.author.name}'s Spotify profile
               </Link>
             </VStack>
-          </div>
+          </Box>
           <Box marginTop={"20px"}>
             <AuthButtons />
             <Text marginTop={"20px"} fontSize="sm">
